@@ -48,31 +48,31 @@ services:
         networks:
             - elastic
     
-    # elastic-container:
-    #     image: docker.elastic.co/elasticsearch/elasticsearch:7.14.2
-    #     container_name: elastic-container
-    #     environment:
-    #         - xpack.security.enabled=false
-    #         - "discovery.type=single-node"
-    #     volumes:
-    #         - ./elastic/data01:/usr/share/elasticsearch/data:ro
-    #     ports:
-    #     - 9200:9200
-    #     networks:
-    #     - elastic
+    elastic-container:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.14.2
+        container_name: elastic-container
+        environment:
+            - xpack.security.enabled=false
+            - "discovery.type=single-node"
+        volumes:
+            - ./elastic/data01:/usr/share/elasticsearch/data:ro
+        ports:
+        - 9200:9200
+        networks:
+        - elastic
     
-    # kibana-container:
-    #     image: docker.elastic.co/kibana/kibana:7.14.2
-    #     container_name: kibana-container
-    #     depends_on:
-    #         - elastic-container
-    #     ports:
-    #         - 5601:5601
-    #     environment:
-    #         ELASTICSEARCH_URL: http://elastic-container:9200
-    #         ELASTICSEARCH_HOSTS: '["http://elastic-container:9200"]'
-    #     networks:
-    #     - elastic
+    kibana-container:
+        image: docker.elastic.co/kibana/kibana:7.14.2
+        container_name: kibana-container
+        depends_on:
+            - elastic-container
+        ports:
+            - 5601:5601
+        environment:
+            ELASTICSEARCH_URL: http://elastic-container:9200
+            ELASTICSEARCH_HOSTS: '["http://elastic-container:9200"]'
+        networks:
+        - elastic
     
 networks:
  elastic:
